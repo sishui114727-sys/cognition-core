@@ -1,0 +1,49 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.invalid/cognition-core/public-data.schema.json",
+  "title": "cognition-core public aggregate data",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "consentVersion", "generatedAt", "totals", "distributions", "note"],
+  "properties": {
+    "schemaVersion": { "const": 1 },
+    "consentVersion": { "const": "public-data-v1" },
+    "generatedAt": { "type": "string", "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$" },
+    "appVersion": { "type": "string" },
+    "kThreshold": { "type": "integer", "minimum": 3 },
+    "totals": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["events", "actions", "cognitions", "persons", "relationships", "activeDays", "selfModelVersions"],
+      "properties": {
+        "events": { "type": "integer", "minimum": 0 },
+        "actions": { "type": "integer", "minimum": 0 },
+        "cognitions": { "type": "integer", "minimum": 0 },
+        "persons": { "type": "integer", "minimum": 0 },
+        "relationships": { "type": "integer", "minimum": 0 },
+        "activeDays": { "type": "integer", "minimum": 0 },
+        "selfModelVersions": { "type": "integer", "minimum": 0 }
+      }
+    },
+    "distributions": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["eventSources", "eventScopeKinds", "eventPrivacy", "cognitionStates", "actionCells"],
+      "properties": {
+        "eventSources": { "$ref": "#/$defs/counts" },
+        "eventScopeKinds": { "$ref": "#/$defs/counts" },
+        "eventPrivacy": { "$ref": "#/$defs/counts" },
+        "cognitionStates": { "$ref": "#/$defs/counts" },
+        "actionCells": { "$ref": "#/$defs/counts" }
+      }
+    },
+    "suppressedCells": { "type": "integer", "minimum": 0 },
+    "note": { "type": "string" }
+  },
+  "$defs": {
+    "counts": {
+      "type": "object",
+      "additionalProperties": { "type": "integer", "minimum": 0 }
+    }
+  }
+}

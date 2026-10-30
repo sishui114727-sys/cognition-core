@@ -1,0 +1,442 @@
+{
+  "id": "cognition-core",
+  "name": "认知核心",
+  "version": "0.23.22",
+  "apiVersion": 1,
+  "category": "knowledge",
+  "description": "认知核心：身份、人物、关系、事件、认知、自我模型、受控行动总线与自主权限面板。",
+  "author": "local",
+  "enabledByDefault": false,
+  "capabilities": [],
+  "requires": [],
+  "permissions": [],
+  "settings": {
+    "adminId": "",
+    "enabled": true,
+    "permissionLevel": 2,
+    "timeZone": "Asia/Hong_Kong",
+    "stickerEnabled": true,
+    "stickerWindowStart": "00:00",
+    "stickerWindowEnd": "23:59",
+    "stickerDailyLimit": 0,
+    "stickerWeeklyLimit": 0,
+    "stickerCooldownMin": 0,
+    "musicEnabled": true,
+    "privateChatEnabled": true,
+    "privateChatWindowStart": "08:00",
+    "privateChatWindowEnd": "23:30",
+    "privateChatDailyLimit": 20,
+    "privateChatWeeklyLimit": 100,
+    "privateChatCooldownMin": 5,
+    "groupChatEnabled": true,
+    "groupChatWindowStart": "08:00",
+    "groupChatWindowEnd": "23:30",
+    "groupChatDailyLimit": 40,
+    "groupChatWeeklyLimit": 250,
+    "groupChatCooldownMin": 2,
+    "biliReadEnabled": true,
+    "qzoneReadEnabled": true,
+    "xhhReadEnabled": true,
+    "biliCommentEnabled": false,
+    "biliCommentWindowStart": "10:00",
+    "biliCommentWindowEnd": "22:00",
+    "biliCommentDailyLimit": 3,
+    "biliCommentWeeklyLimit": 10,
+    "biliCommentCooldownMin": 60,
+    "xiaohiheEnabled": false,
+    "xiaohiheWindowStart": "10:00",
+    "xiaohiheWindowEnd": "23:00",
+    "xiaohiheDailyLimit": 2,
+    "xiaohiheWeeklyLimit": 7,
+    "xiaohiheCooldownMin": 120,
+    "qzoneEnabled": false,
+    "qzoneWindowStart": "09:00",
+    "qzoneWindowEnd": "23:00",
+    "qzoneDailyLimit": 2,
+    "qzoneWeeklyLimit": 7,
+    "qzoneCooldownMin": 120,
+    "avatarEnabled": false,
+    "avatarWindowStart": "00:00",
+    "avatarWindowEnd": "23:59",
+    "avatarDailyLimit": 1,
+    "avatarWeeklyLimit": 2,
+    "avatarCooldownMin": 1440,
+    "videoEnabled": false,
+    "videoWindowStart": "10:00",
+    "videoWindowEnd": "22:00",
+    "videoDailyLimit": 1,
+    "videoWeeklyLimit": 2,
+    "videoCooldownMin": 1440,
+    "desktopEnabled": false,
+    "injectContextEnabled": false,
+    "injectContextTokens": 600,
+    "injectContextMaxItems": 3,
+    "injectContextKinds": "all",
+    "injectCognitionStatus": "stable",
+    "injectPersonCardEnabled": true,
+    "recordDialogue": true,
+    "consolidateEnabled": false,
+    "consolidateIntervalMin": 30
+  },
+  "configSchema": {
+    "overview": {
+      "type": "action",
+      "label": "自主权限面板",
+      "button": "打开权限面板",
+      "panel": "panel/overview.html",
+      "description": "只读总览：当前权限等级、各功能开关、时间窗、日/周上限与冷却。修改请用本插件的设置表单。"
+    },
+    "adminId": {
+      "type": "string",
+      "label": "主人 QQ 号",
+      "description": "只用于 owner-only 判定；留空表示未绑定主人，所有本地/行动能力默认拒绝。"
+    },
+    "enabled": {
+      "type": "boolean",
+      "label": "启用认知核心",
+      "description": "总开关。关闭后不读取、不记录、不执行任何认知动作。"
+    },
+    "permissionLevel": {
+      "type": "enum",
+      "label": "最高权限等级",
+      "options": [
+        {
+          "value": 0,
+          "label": "L0 · 只读"
+        },
+        {
+          "value": 1,
+          "label": "L1 · 低风险"
+        },
+        {
+          "value": 2,
+          "label": "L2 · 社交"
+        },
+        {
+          "value": 3,
+          "label": "L3 · 公共表达"
+        },
+        {
+          "value": 4,
+          "label": "L4 · 高影响"
+        }
+      ],
+      "description": "L2 只允许社交；L3 才允许评论/空间；L4 才允许视频/桌面。"
+    },
+    "timeZone": {
+      "type": "string",
+      "label": "时间窗时区",
+      "description": "IANA 时区，例如 Asia/Hong_Kong。默认 Asia/Hong_Kong。"
+    },
+    "injectContextEnabled": {
+      "type": "boolean",
+      "label": "每轮注入认知上下文（实验，默认关闭）",
+      "description": "只注入小预算 ContextPack 到最后一条用户消息；不注入完整 SelfModel，不注入完整历史。默认关闭。"
+    },
+    "injectContextTokens": {
+      "type": "number",
+      "label": "注入预算（估算 token）",
+      "description": "默认 600；仅在上面的开关打开时生效。建议 400–900。"
+    },
+    "injectContextMaxItems": {
+      "type": "number",
+      "label": "注入条数上限",
+      "description": "默认 3；只取当前会话范围内最相关的认知/事件。"
+    },
+    "injectContextKinds": {
+      "type": "string",
+      "label": "注入范围（all / private / group，默认 all）",
+      "description": "首验阶段填 private：只有私聊注入，群聊保持原样；确认稳定后再改 all。"
+    },
+    "injectCognitionStatus": {
+      "type": "string",
+      "label": "注入的认知状态（stable / any，默认 stable）",
+      "description": "stable：只注入经两个语境验证过的认知；any：候选认知也注入，会明显增加误报风险。"
+    },
+    "consolidateEnabled": {
+      "type": "boolean",
+      "label": "后台巩固记忆（默认关闭）",
+      "description": "开启后把对话整理成 Episode 与候选认知；只在主人发言里抽取，默认每 30 分钟最多一次。"
+    },
+    "consolidateIntervalMin": {
+      "type": "number",
+      "label": "巩固最小间隔（分钟）",
+      "description": "默认 30；值越大越省，但记忆更新越慢。"
+    },
+    "injectPersonCardEnabled": {
+      "type": "boolean",
+      "label": "跨会话认人卡片（默认开启）",
+      "description": "只对当前发言者注入少量已有印象；群聊不会带入私聊印象。"
+    },
+    "recordDialogue": {
+      "type": "boolean",
+      "label": "记录新对话事件（默认开启）",
+      "description": "把每轮触发文本和回复写入本地 events.jsonl，供检索和后续反思；不上传。"
+    },
+    "stickerEnabled": {
+      "type": "boolean",
+      "label": "表情 · 接口开关",
+      "description": "从本地表情库选择并发送；默认每日/每周无限制。0 = 无限制。 默认开启。"
+    },
+    "stickerWindowStart": {
+      "type": "string",
+      "label": "表情 · 允许开始时间（HH:mm）",
+      "description": "本地时区的时间窗起点。跨午夜可写 23:00–02:00。"
+    },
+    "stickerWindowEnd": {
+      "type": "string",
+      "label": "表情 · 允许结束时间（HH:mm）",
+      "description": "本地时区的时间窗终点；等于起点表示全天。"
+    },
+    "stickerDailyLimit": {
+      "type": "number",
+      "label": "表情 · 每日条数上限",
+      "description": "0 = 不限制。发布/评价类建议保持小数值。"
+    },
+    "stickerWeeklyLimit": {
+      "type": "number",
+      "label": "表情 · 每周条数上限",
+      "description": "0 = 不限制；应大于或等于每日上限。"
+    },
+    "stickerCooldownMin": {
+      "type": "number",
+      "label": "表情 · 冷却（分钟）",
+      "description": "两次动作之间的最小间隔，24 小时 = 1440。"
+    },
+    "musicEnabled": {
+      "type": "boolean",
+      "label": "音乐 · 接口开关",
+      "description": "从本地音乐库选择并播放；不包含外部平台写入。 默认开启。"
+    },
+    "privateChatEnabled": {
+      "type": "boolean",
+      "label": "主动私聊 · 接口开关",
+      "description": "主动发起私聊；受时间窗、日/周上限和冷却限制。 默认开启。"
+    },
+    "privateChatWindowStart": {
+      "type": "string",
+      "label": "主动私聊 · 允许开始时间（HH:mm）",
+      "description": "本地时区的时间窗起点。跨午夜可写 23:00–02:00。"
+    },
+    "privateChatWindowEnd": {
+      "type": "string",
+      "label": "主动私聊 · 允许结束时间（HH:mm）",
+      "description": "本地时区的时间窗终点；等于起点表示全天。"
+    },
+    "privateChatDailyLimit": {
+      "type": "number",
+      "label": "主动私聊 · 每日条数上限",
+      "description": "0 = 不限制。发布/评价类建议保持小数值。"
+    },
+    "privateChatWeeklyLimit": {
+      "type": "number",
+      "label": "主动私聊 · 每周条数上限",
+      "description": "0 = 不限制；应大于或等于每日上限。"
+    },
+    "privateChatCooldownMin": {
+      "type": "number",
+      "label": "主动私聊 · 冷却（分钟）",
+      "description": "两次动作之间的最小间隔，24 小时 = 1440。"
+    },
+    "groupChatEnabled": {
+      "type": "boolean",
+      "label": "群内接话 · 接口开关",
+      "description": "在群里主动接话；受时间窗、日/周上限和冷却限制。 默认开启。"
+    },
+    "groupChatWindowStart": {
+      "type": "string",
+      "label": "群内接话 · 允许开始时间（HH:mm）",
+      "description": "本地时区的时间窗起点。跨午夜可写 23:00–02:00。"
+    },
+    "groupChatWindowEnd": {
+      "type": "string",
+      "label": "群内接话 · 允许结束时间（HH:mm）",
+      "description": "本地时区的时间窗终点；等于起点表示全天。"
+    },
+    "groupChatDailyLimit": {
+      "type": "number",
+      "label": "群内接话 · 每日条数上限",
+      "description": "0 = 不限制。发布/评价类建议保持小数值。"
+    },
+    "groupChatWeeklyLimit": {
+      "type": "number",
+      "label": "群内接话 · 每周条数上限",
+      "description": "0 = 不限制；应大于或等于每日上限。"
+    },
+    "groupChatCooldownMin": {
+      "type": "number",
+      "label": "群内接话 · 冷却（分钟）",
+      "description": "两次动作之间的最小间隔，24 小时 = 1440。"
+    },
+    "biliReadEnabled": {
+      "type": "boolean",
+      "label": "B站学习/观看 · 接口开关",
+      "description": "读取视频、字幕、抽帧和学习材料；不包含评论/点赞。 默认开启。"
+    },
+    "qzoneReadEnabled": {
+      "type": "boolean",
+      "label": "QQ空间只读 · 接口开关",
+      "description": "只读自己的空间说说与评论；复用宿主 OneBot，不重写登录，不发帖/评论。 默认开启。"
+    },
+    "xhhReadEnabled": {
+      "type": "boolean",
+      "label": "小黑盒只读 · 接口开关",
+      "description": "只读小黑盒社区信息流；不登录、不评论、不发帖。 默认开启。"
+    },
+    "biliCommentEnabled": {
+      "type": "boolean",
+      "label": "B站评论/弹幕 · 接口开关",
+      "description": "公开评论或弹幕；默认关闭，受严格时间和频率限制。 默认关闭。"
+    },
+    "biliCommentWindowStart": {
+      "type": "string",
+      "label": "B站评论/弹幕 · 允许开始时间（HH:mm）",
+      "description": "本地时区的时间窗起点。跨午夜可写 23:00–02:00。"
+    },
+    "biliCommentWindowEnd": {
+      "type": "string",
+      "label": "B站评论/弹幕 · 允许结束时间（HH:mm）",
+      "description": "本地时区的时间窗终点；等于起点表示全天。"
+    },
+    "biliCommentDailyLimit": {
+      "type": "number",
+      "label": "B站评论/弹幕 · 每日条数上限",
+      "description": "0 = 不限制。发布/评价类建议保持小数值。"
+    },
+    "biliCommentWeeklyLimit": {
+      "type": "number",
+      "label": "B站评论/弹幕 · 每周条数上限",
+      "description": "0 = 不限制；应大于或等于每日上限。"
+    },
+    "biliCommentCooldownMin": {
+      "type": "number",
+      "label": "B站评论/弹幕 · 冷却（分钟）",
+      "description": "两次动作之间的最小间隔，24 小时 = 1440。"
+    },
+    "xiaohiheEnabled": {
+      "type": "boolean",
+      "label": "小黑盒发帖/评论 · 接口开关",
+      "description": "小黑盒公开内容；默认关闭，建议只在明确授权时开启。 默认关闭。"
+    },
+    "xiaohiheWindowStart": {
+      "type": "string",
+      "label": "小黑盒发帖/评论 · 允许开始时间（HH:mm）",
+      "description": "本地时区的时间窗起点。跨午夜可写 23:00–02:00。"
+    },
+    "xiaohiheWindowEnd": {
+      "type": "string",
+      "label": "小黑盒发帖/评论 · 允许结束时间（HH:mm）",
+      "description": "本地时区的时间窗终点；等于起点表示全天。"
+    },
+    "xiaohiheDailyLimit": {
+      "type": "number",
+      "label": "小黑盒发帖/评论 · 每日条数上限",
+      "description": "0 = 不限制。发布/评价类建议保持小数值。"
+    },
+    "xiaohiheWeeklyLimit": {
+      "type": "number",
+      "label": "小黑盒发帖/评论 · 每周条数上限",
+      "description": "0 = 不限制；应大于或等于每日上限。"
+    },
+    "xiaohiheCooldownMin": {
+      "type": "number",
+      "label": "小黑盒发帖/评论 · 冷却（分钟）",
+      "description": "两次动作之间的最小间隔，24 小时 = 1440。"
+    },
+    "qzoneEnabled": {
+      "type": "boolean",
+      "label": "QQ空间发布/评论 · 接口开关",
+      "description": "QQ空间公开内容；默认关闭。 默认关闭。"
+    },
+    "qzoneWindowStart": {
+      "type": "string",
+      "label": "QQ空间发布/评论 · 允许开始时间（HH:mm）",
+      "description": "本地时区的时间窗起点。跨午夜可写 23:00–02:00。"
+    },
+    "qzoneWindowEnd": {
+      "type": "string",
+      "label": "QQ空间发布/评论 · 允许结束时间（HH:mm）",
+      "description": "本地时区的时间窗终点；等于起点表示全天。"
+    },
+    "qzoneDailyLimit": {
+      "type": "number",
+      "label": "QQ空间发布/评论 · 每日条数上限",
+      "description": "0 = 不限制。发布/评价类建议保持小数值。"
+    },
+    "qzoneWeeklyLimit": {
+      "type": "number",
+      "label": "QQ空间发布/评论 · 每周条数上限",
+      "description": "0 = 不限制；应大于或等于每日上限。"
+    },
+    "qzoneCooldownMin": {
+      "type": "number",
+      "label": "QQ空间发布/评论 · 冷却（分钟）",
+      "description": "两次动作之间的最小间隔，24 小时 = 1440。"
+    },
+    "avatarEnabled": {
+      "type": "boolean",
+      "label": "更换头像 · 接口开关",
+      "description": "修改 QQ 头像；默认关闭。 默认关闭。"
+    },
+    "avatarWindowStart": {
+      "type": "string",
+      "label": "更换头像 · 允许开始时间（HH:mm）",
+      "description": "本地时区的时间窗起点。跨午夜可写 23:00–02:00。"
+    },
+    "avatarWindowEnd": {
+      "type": "string",
+      "label": "更换头像 · 允许结束时间（HH:mm）",
+      "description": "本地时区的时间窗终点；等于起点表示全天。"
+    },
+    "avatarDailyLimit": {
+      "type": "number",
+      "label": "更换头像 · 每日条数上限",
+      "description": "0 = 不限制。发布/评价类建议保持小数值。"
+    },
+    "avatarWeeklyLimit": {
+      "type": "number",
+      "label": "更换头像 · 每周条数上限",
+      "description": "0 = 不限制；应大于或等于每日上限。"
+    },
+    "avatarCooldownMin": {
+      "type": "number",
+      "label": "更换头像 · 冷却（分钟）",
+      "description": "两次动作之间的最小间隔，24 小时 = 1440。"
+    },
+    "videoEnabled": {
+      "type": "boolean",
+      "label": "发布视频 · 接口开关",
+      "description": "制作并发布视频；默认关闭，高影响动作。 默认关闭。"
+    },
+    "videoWindowStart": {
+      "type": "string",
+      "label": "发布视频 · 允许开始时间（HH:mm）",
+      "description": "本地时区的时间窗起点。跨午夜可写 23:00–02:00。"
+    },
+    "videoWindowEnd": {
+      "type": "string",
+      "label": "发布视频 · 允许结束时间（HH:mm）",
+      "description": "本地时区的时间窗终点；等于起点表示全天。"
+    },
+    "videoDailyLimit": {
+      "type": "number",
+      "label": "发布视频 · 每日条数上限",
+      "description": "0 = 不限制。发布/评价类建议保持小数值。"
+    },
+    "videoWeeklyLimit": {
+      "type": "number",
+      "label": "发布视频 · 每周条数上限",
+      "description": "0 = 不限制；应大于或等于每日上限。"
+    },
+    "videoCooldownMin": {
+      "type": "number",
+      "label": "发布视频 · 冷却（分钟）",
+      "description": "两次动作之间的最小间隔，24 小时 = 1440。"
+    },
+    "desktopEnabled": {
+      "type": "boolean",
+      "label": "桌面操作 · 接口开关",
+      "description": "操作本机桌面；默认关闭，必须使用隔离账户或沙箱。 默认关闭。"
+    }
+  }
+}

@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>认知核心 · 自主权限面板</title>
+  <link rel="stylesheet" href="overview.css">
+</head>
+<body>
+  <main class="shell">
+    <header class="top">
+      <div>
+        <p class="eyebrow">COGNITION CORE</p>
+        <h1>自主权限面板</h1>
+        <p class="sub">只读总览：权限等级、功能开关、时间窗、日/周上限与冷却。</p>
+      </div>
+      <span id="state" class="state">读取中</span>
+    </header>
+
+    <section class="hero">
+      <div>
+        <p class="label">当前最高权限</p>
+        <p id="level" class="level">—</p>
+        <p id="levelDesc" class="muted">—</p>
+      </div>
+      <div class="hero-meta">
+        <div><span>时区</span><strong id="timezone">—</strong></div>
+        <div><span>核心状态</span><strong id="enabled">—</strong></div>
+        <div><span>快照时间</span><strong id="updated">—</strong></div>
+      </div>
+    </section>
+
+    <aside class="notice">
+      <strong>这是只读面板。</strong>
+      修改开关、时间窗和条数上限，请在插件的「设置」表单里操作。
+      QQ Agent 的插件页面通道是只读的，避免面板绕过配置与权限校验。
+    </aside>
+
+    <section id="groups" class="groups"></section>
+
+    <footer class="foot">
+      <span>cognition-core</span>
+      <span>权限优先级：P1 主人信息安全 &gt; P2 非主人隔离 &gt; P3 自我完整性</span>
+    </footer>
+  </main>
+  <script type="module" src="overview.js"></script>
+</body>
+</html>

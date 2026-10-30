@@ -1,0 +1,231 @@
+{
+  "snapshot": {
+    "updatedAt": "2026-10-28T11:53:37.970Z",
+    "permissionLevel": 2,
+    "permissionLabel": "L2 · 社交",
+    "timeZone": "Asia/Hong_Kong",
+    "enabled": true,
+    "features": [
+      {
+        "key": "sticker",
+        "label": "表情",
+        "category": "expression",
+        "description": "从本地表情库选择并发送；默认每日/每周无限制。0 = 无限制。",
+        "enabled": true,
+        "level": 1,
+        "hardLevel": 1,
+        "limited": true,
+        "window": {
+          "start": "00:00",
+          "end": "23:59"
+        },
+        "dailyLimit": 0,
+        "weeklyLimit": 0,
+        "cooldownMin": 0,
+        "usage": null
+      },
+      {
+        "key": "music",
+        "label": "音乐",
+        "category": "expression",
+        "description": "从本地音乐库选择并播放；不包含外部平台写入。",
+        "enabled": true,
+        "level": 1,
+        "hardLevel": 1,
+        "limited": false,
+        "window": null,
+        "dailyLimit": null,
+        "weeklyLimit": null,
+        "cooldownMin": null,
+        "usage": null
+      },
+      {
+        "key": "privateChat",
+        "label": "主动私聊",
+        "category": "social",
+        "description": "主动发起私聊；受时间窗、日/周上限和冷却限制。",
+        "enabled": true,
+        "level": 2,
+        "hardLevel": 2,
+        "limited": true,
+        "window": {
+          "start": "08:00",
+          "end": "23:30"
+        },
+        "dailyLimit": 20,
+        "weeklyLimit": 100,
+        "cooldownMin": 5,
+        "usage": null
+      },
+      {
+        "key": "groupChat",
+        "label": "群内接话",
+        "category": "social",
+        "description": "在群里主动接话；受时间窗、日/周上限和冷却限制。",
+        "enabled": true,
+        "level": 2,
+        "hardLevel": 2,
+        "limited": true,
+        "window": {
+          "start": "08:00",
+          "end": "23:30"
+        },
+        "dailyLimit": 40,
+        "weeklyLimit": 250,
+        "cooldownMin": 2,
+        "usage": null
+      },
+      {
+        "key": "biliRead",
+        "label": "B站学习/观看",
+        "category": "read",
+        "description": "读取视频、字幕、抽帧和学习材料；不包含评论/点赞。",
+        "enabled": true,
+        "level": 1,
+        "hardLevel": 1,
+        "limited": false,
+        "window": null,
+        "dailyLimit": null,
+        "weeklyLimit": null,
+        "cooldownMin": null,
+        "usage": null
+      },
+      {
+        "key": "qzoneRead",
+        "label": "QQ空间只读",
+        "category": "read",
+        "description": "只读自己的空间说说与评论；复用宿主 OneBot，不重写登录，不发帖/评论。",
+        "enabled": true,
+        "level": 1,
+        "hardLevel": 1,
+        "limited": false,
+        "window": null,
+        "dailyLimit": null,
+        "weeklyLimit": null,
+        "cooldownMin": null,
+        "usage": null
+      },
+      {
+        "key": "xhhRead",
+        "label": "小黑盒只读",
+        "category": "read",
+        "description": "只读小黑盒社区信息流；不登录、不评论、不发帖。",
+        "enabled": true,
+        "level": 1,
+        "hardLevel": 1,
+        "limited": false,
+        "window": null,
+        "dailyLimit": null,
+        "weeklyLimit": null,
+        "cooldownMin": null,
+        "usage": null
+      },
+      {
+        "key": "biliComment",
+        "label": "B站评论/弹幕",
+        "category": "publish",
+        "description": "公开评论或弹幕；默认关闭，受严格时间和频率限制。",
+        "enabled": false,
+        "level": 3,
+        "hardLevel": 3,
+        "limited": true,
+        "window": {
+          "start": "10:00",
+          "end": "22:00"
+        },
+        "dailyLimit": 3,
+        "weeklyLimit": 10,
+        "cooldownMin": 60,
+        "usage": null
+      },
+      {
+        "key": "xiaohihe",
+        "label": "小黑盒发帖/评论",
+        "category": "publish",
+        "description": "小黑盒公开内容；默认关闭，建议只在明确授权时开启。",
+        "enabled": false,
+        "level": 3,
+        "hardLevel": 3,
+        "limited": true,
+        "window": {
+          "start": "10:00",
+          "end": "23:00"
+        },
+        "dailyLimit": 2,
+        "weeklyLimit": 7,
+        "cooldownMin": 120,
+        "usage": null
+      },
+      {
+        "key": "qzone",
+        "label": "QQ空间发布/评论",
+        "category": "publish",
+        "description": "QQ空间公开内容；默认关闭。",
+        "enabled": false,
+        "level": 3,
+        "hardLevel": 3,
+        "limited": true,
+        "window": {
+          "start": "09:00",
+          "end": "23:00"
+        },
+        "dailyLimit": 2,
+        "weeklyLimit": 7,
+        "cooldownMin": 120,
+        "usage": null
+      },
+      {
+        "key": "avatar",
+        "label": "更换头像",
+        "category": "public",
+        "description": "修改 QQ 头像；默认关闭。",
+        "enabled": false,
+        "level": 3,
+        "hardLevel": 3,
+        "limited": true,
+        "window": {
+          "start": "00:00",
+          "end": "23:59"
+        },
+        "dailyLimit": 1,
+        "weeklyLimit": 2,
+        "cooldownMin": 1440,
+        "usage": null
+      },
+      {
+        "key": "video",
+        "label": "发布视频",
+        "category": "publish",
+        "description": "制作并发布视频；默认关闭，高影响动作。",
+        "enabled": false,
+        "level": 4,
+        "hardLevel": 4,
+        "limited": true,
+        "window": {
+          "start": "10:00",
+          "end": "22:00"
+        },
+        "dailyLimit": 1,
+        "weeklyLimit": 2,
+        "cooldownMin": 1440,
+        "usage": null
+      },
+      {
+        "key": "desktop",
+        "label": "桌面操作",
+        "category": "device",
+        "description": "操作本机桌面；默认关闭，必须使用隔离账户或沙箱。",
+        "enabled": false,
+        "level": 4,
+        "hardLevel": 4,
+        "limited": false,
+        "window": null,
+        "dailyLimit": null,
+        "weeklyLimit": null,
+        "cooldownMin": null,
+        "usage": null
+      }
+    ]
+  },
+  "note": "示例快照；真实运行时由宿主写入 plugin-data/cognition-core/storage.json。"
+}

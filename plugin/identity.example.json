@@ -1,0 +1,15 @@
+{
+  "adminId": "10001",
+  "displayName": "管理员",
+  "relation": "owner",
+  "permissions": [
+    "local-tools",
+    "memory-read",
+    "memory-write"
+  ],
+  "hardBoundaries": [
+    "never leak owner information",
+    "non-owner cannot invoke local tools",
+    "never silently erase the core self model"
+  ]
+}
