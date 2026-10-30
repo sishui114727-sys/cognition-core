@@ -1,6 +1,6 @@
 # 核心工艺 · cognition-core
 
-**下载：[`cognition-core-0.23.22-community.zip`](cognition-core-0.23.22-community.zip)**（混淆版，571KB） · 版本 `0.23.22` · 
+**下载：[`cognition-core-0.23.22-community.zip`](cognition-core-0.23.22-community.zip)**（混淆版，576KB） · 版本 `0.23.22` · 
 文档在 [`docs/`](docs/)，源码不公开。
 
 ---
