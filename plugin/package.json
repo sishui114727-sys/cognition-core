@@ -1,12 +1,12 @@
 {
   "name": "cognition-core",
-  "version": "0.23.22",
+  "version": "0.24.0",
   "private": true,
   "type": "module",
   "license": "UNLICENSED",
   "description": "Phase 1 cognition core: identity, people, relationships, append-only events, legacy import",
   "scripts": {
-    "test": "node --test",
+    "test": "node scripts/test.mjs",
     "import-legacy": "node scripts/import-legacy.mjs",
     "dist": "node scripts/build-dist.mjs",
     "smoke": "node scripts/smoke-install.mjs",

@@ -1,7 +1,7 @@
 {
   "id": "cognition-core",
   "name": "认知核心",
-  "version": "0.23.22",
+  "version": "0.24.0",
   "apiVersion": 1,
   "category": "knowledge",
   "description": "认知核心：身份、人物、关系、事件、认知、自我模型、受控行动总线与自主权限面板。",
@@ -76,7 +76,9 @@
     "injectPersonCardEnabled": true,
     "recordDialogue": true,
     "consolidateEnabled": false,
-    "consolidateIntervalMin": 30
+    "consolidateIntervalMin": 30,
+    "studyBridgeEnabled": false,
+    "studyDataDir": ""
   },
   "configSchema": {
     "overview": {
@@ -152,6 +154,18 @@
       "type": "string",
       "label": "注入的认知状态（stable / any，默认 stable）",
       "description": "stable：只注入经两个语境验证过的认知；any：候选认知也注入，会明显增加误报风险。"
+    },
+    "studyBridgeEnabled": {
+      "type": "boolean",
+      "label": "读取学习手账",
+      "default": false,
+      "description": "打开后「回忆认知」会附带学习管线里的手账 / 稿件 / 札记标题（只读，不写入手账）。没装学习管线时保持无效果。"
+    },
+    "studyDataDir": {
+      "type": "string",
+      "label": "学习管线数据目录（一般不用填）",
+      "default": "",
+      "description": "留空则用同级的 plugin-data/cognition-study。装在别处时才需要填绝对路径。"
     },
     "consolidateEnabled": {
       "type": "boolean",
